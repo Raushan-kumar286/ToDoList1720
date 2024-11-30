@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <style>
+    *{
+      padding: 0px;
+      margin: 0px;
+      list-style-type: none;
+      box-sizing: border-box;
+    }
+    header{
+      width: 100vw;
+      background-color: blueviolet;
+    }
+    ul{
+      display: flex;
+    
+    }
+   .nav ul li{
+      padding: 15px;
+      cursor: pointer;
+      color: rgba(234, 232, 232,0.8);
+    }
+    .search-container{
+      width: 50vw;
+      margin: auto;
+      margin-top: 1rem;
+    }
+    .search{
+      background-color: pink;
+      display: flex;
+      justify-content: space-evenly;
+      align-items: center;
+      border: 1px solid black;
+    }
+    .chapters{
+      flex-grow: 1;
+      height: 30px;
+      border: none;
+      padding: 3px 10px;
+    }
+    .addBtn{
+      width: 60px;
+      padding: 3px 10px;
+      font-weight: bold;
+      background-color: pink;
+      cursor: pointer;
+      border: none;
+      
+    }
+    .search-container ul {
+      margin-top: 0.7rem;    
+  
+    }.list-group{
+      width: 50vw;
+      display: flex;
+    justify-content: center;
+    }
+    
+    .list-item {
+      font-size: 20px;
+      padding: 9px;
+      font-weight: bold;
+    display: block;
+      width: 100%;
+      margin-top: 15px;
+      border: 1px solid turquoise;
+      border-radius: 5px;
+      display: flex;
+      justify-content: space-between;
+    }
+  h4{
+    flex-grow: 1;
+  }
+.btn{
+  padding: 2px 6px;
+  border: none;
+  border-radius: 4px;
+
+}
+.btn-danger{
+  background-color: brown;
+  color: rgb(209, 193, 193);
+  
+} 
+.btn-warning{
+  background-color: gold;
+  font-weight: bold;
+  margin-right: 8px;
+}
+ 
+  </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+      <header>
+        <div class="nav">
+          <ul>
+            <li>Navbar</li>
+            <li>Home</li>
+            <li>Features</li>
+            <li>Pricing</li>
+          </ul>
+        </div>
+      </header>
+
+        <div class="search-container">
+          <div class="search">
+            <input type="text" class="chapters" placeholder="Chapter Name">
+            <button class="addBtn  ">Add</button>
+          </div>
+         <ul class="list-group">
+          <h3 class="empty-msg" style="text-align: center;">Nothing to display. Please add a Chapter  </h3>
+          <!-- <li class="list-item">
+            <h4>Chapter 1</h4>
+            <button class="btn btn-warning">Edit </button>
+            <button class="btn btn-danger" onclick="remover(this)">Remover</button>
+          </li> -->
+         </ul>
+        </div>
+      <script>
+  let showEmptyMsg = document.createElement('h3');
+     let addBtn = document.querySelector('.addBtn');
+     addBtn.addEventListener('click',addChapter);
+     let previousEmtpyMst = document.querySelector('.empty-msg');
+     let removeBtn = document.querySelector('.btn-danger')
+     let parentList = document.querySelector('.list-group');
+     function addChapter(e){
+    
+       let currentInput = document.querySelector('.chapters');
+       let ans = (!currentInput.value.includes('Chapter'));
+    let ans2 = (!currentInput.value.includes('chapter'));
+  if(currentInput.value.length<=0){
+      return;
+  }
+  else if(ans && ans2){
+alert("Invalid input !")
+currentInput.value="";
+  }
+  else{
+    let newLi = document.createElement('li');
+newLi.classList.add('list-item')
+newLi.innerHTML = `  <h4>${currentInput.value}</h4>
+            <button class="btn btn-warning" onclick="editChapter(this)">Edit </button>
+            <button class="btn btn-danger" onclick="remover(this)">Remover</button>`
+parentList.after(newLi);
+previousEmtpyMst.remove();
+currentInput.value="";
+showEmptyMsg.remove();
+  }
+ 
+     }
+
+function remover(currElement){
+currElement.parentElement.remove()
+let newLi=document.querySelector('.list-item');
+if(newLi==null){
+  showEmptyMsg.innerText = "Nothing to display. Please add a Chapter  ";
+  parentList.appendChild(showEmptyMsg);
+  showEmptyMsg.style.textAlign="center";
+}
+}
+
+// function for editing chapters name ; 
+function editChapter(currElement){
+  if(currElement.textContent=="Done"){
+    currElement.textContent="Edit";
+  let currChapter = currElement.previousElementSibling.value;
+    let currHeading = document.createElement('h4');
+    currHeading.className="empty-msg"
+    currHeading.textContent=currChapter;
+    currElement.parentElement.replaceChild(currHeading,currElement.previousElementSibling);
+
+
+  }
+  else{
+    let currChapter = currElement.previousElementSibling.textContent;
+    currElement.textContent="Done";
+let currInput = document.createElement('input');
+currInput.value = currChapter;
+currElement.parentElement.replaceChild(currInput,currElement.previousElementSibling);
+
+  }
+}
+</script>
+</body>
+</html>
+
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <style>
+      img{
+      width: 200px;
+      height: 300px;
+      display: block;
+      margin: auto;
+      }
+      p{
+        text-align: center;
+      }
+    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+<img id="image" src="pic_bulboff.gif" alt="Not Available">
+      
+<p>
+  <button type="button"
+   onclick="light(1)">Light 
+   On</button>
+  <button type="button"
+   onclick="light(0)">Light 
+   Off</button>
+
+</p>   
+  <script>
+        function light(show){
+          
+          let pic;
+            if(show==1){
+                 pic='pic_bulbon.gif';
+            }
+            else{
+                pic='pic_bulboff.gif';
+            }
+            document.getElementById("image").setAttribute("src",pic)=pic; }
+        </script>
+</body>
+</html> -->
